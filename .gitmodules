@@ -1,0 +1,3 @@
+[submodule "order-api"]
+	path = order-api
+	url = git@github.com:augustoa10/order-api.git

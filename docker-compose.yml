@@ -1,0 +1,29 @@
+version: "3.5"
+
+services:
+  postgres:
+    image: postgres:9.6
+    environment:
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  app:
+    build: ./order-api
+    environment:
+      RACK_ENV: development
+      RAILS_ENV: development
+    volumes:
+      - ./order-api/:/root
+      - gems:/usr/local/bundle
+    ports:
+      - 3000:3000
+    command: bash -c "./bin/dev_setup && rails s -p 3000 -b 0.0.0.0"
+    depends_on:
+      - postgres
+
+volumes:
+  db_data:
+  gems:
